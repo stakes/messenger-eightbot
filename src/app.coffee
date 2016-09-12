@@ -22,8 +22,10 @@ app.get '/webhook/', (req, res) ->
 
 # Process messages
 app.post '/webhook', (req, res) ->
+  console.log "Starting to process"
   messaging_events = req.body.entry[0].messaging
   for event in messaging_events
+    console.log event
     sender = event.sender.id
     if event.message and event.message.text
       text = event.message.text
