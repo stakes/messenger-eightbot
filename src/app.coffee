@@ -7,7 +7,7 @@ app.set 'port', (process.env.PORT || 5000)
 app.use bodyParser.urlencoded(extended: false)
 app.use bodyParser.json()
 
-token = process.env.FB_PAGE_ACCESS_TOKEN
+token = process.env.PAGE_ACCESS_TOKEN
 
 # Index route
 app.get '/', (req, res) ->
@@ -35,7 +35,6 @@ app.post '/webhook', (req, res) ->
 
 # Send a message
 sendTextMessage = (sender, text) ->
-  console.log token
   messageData =
     text: text
   obj =
