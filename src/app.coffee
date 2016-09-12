@@ -30,7 +30,23 @@ app.post '/webhook', (req, res) ->
       sendTextMessage sender, "Text received, echo: #{text.substring(0, 200)}"
   res.sendStatus 200
 
-
+# Send a message
+sendTextMessage = (sender, text) ->
+  messageData =
+    text: text
+  obj =
+    url: 'https://graph.facebook.com/v2.6/me/messages'
+    qs: {access_token: token}
+    method: 'POST'
+    json:
+      recipient: id:sender
+      message: messageData
+  request obj, (error, response, body) ->
+    if error
+      console.log 'Error sending messages:', error
+    else if response.body.error
+      console.log 'Error:', response.body.error
+ 
 app.listen app.get('port'), ->
   console.log 'Eightbot is running on port',
   app.get('port'),
