@@ -9,6 +9,8 @@ app.use bodyParser.json()
 
 token = process.env.PAGE_ACCESS_TOKEN
 
+responses = require './responses'
+
 # Index route
 app.get '/', (req, res) ->
   res.send "I'm Eightbot!"
@@ -23,14 +25,12 @@ app.get '/webhook/', (req, res) ->
 
 # Process messages
 app.post '/webhook', (req, res) ->
-  console.log "Starting to process"
   messaging_events = req.body.entry[0].messaging
   for event in messaging_events
-    console.log event
     sender = event.sender.id
     if event.message and event.message.text
       text = event.message.text
-      sendTextMessage sender, "Text received, echo: #{text.substring(0, 200)}"
+      sendTextMessage sender, _sample responses
   res.sendStatus 200
 
 # Send a message
@@ -49,7 +49,8 @@ sendTextMessage = (sender, text) ->
       console.log 'Error sending messages:', error
     else if response.body.error
       console.log 'Error:', response.body.error
- 
+
+# Start server
 app.listen app.get('port'), ->
   console.log 'Eightbot is running on port',
   app.get('port'),
