@@ -31,7 +31,7 @@ app.post '/webhook', (req, res) ->
     sender = event.sender.id
     if event.message and event.message.text
       text = event.message.text
-      sendTextMessage sender, _.sample(responses)
+      sendTextMessage sender, _.sample(responses.eightball)
   res.sendStatus 200
 
 # Send a message
