@@ -15,10 +15,13 @@ app.get '/', (req, res) ->
 
 # For Facebook verification
 app.get '/webhook/', (req, res) ->
-  if req.query['hub.verify_token'] == 'my_voice_is_my_password_verify_me'
+  if req.query['hub.verify_token'] == process.env.MESSENGER_VERIFY_TOKEN
     res.send req.query['hub.challenge']
   else
     res.send 'Error: invalid token'
 
 app.listen app.get('port'), ->
-  console.log 'Eightbot is running on port', app.get('port')
+  console.log 'Eightbot is running on port',
+  app.get('port'),
+  'in NODE_ENV:',
+  process.env.NODE_ENV
