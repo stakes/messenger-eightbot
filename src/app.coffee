@@ -15,6 +15,7 @@ app.get '/', (req, res) ->
 
 # For Facebook verification
 app.get '/webhook/', (req, res) ->
+  console.log 'test'
   if req.query['hub.verify_token'] == process.env.MESSENGER_VERIFY_TOKEN
     res.send req.query['hub.challenge']
   else
@@ -34,6 +35,7 @@ app.post '/webhook', (req, res) ->
 
 # Send a message
 sendTextMessage = (sender, text) ->
+  console.log token
   messageData =
     text: text
   obj =
